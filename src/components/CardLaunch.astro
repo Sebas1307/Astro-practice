@@ -7,6 +7,7 @@ interface Props {
  fligthNumber: number
 }
 const { id, details, img, success, fligthNumber } = Astro.props
+const launchStatus = success ? 'Success' : 'Failure'
 ---
 
 <a
@@ -22,14 +23,28 @@ const { id, details, img, success, fligthNumber } = Astro.props
  </picture>
 
  <header class='p-4 flex-grow'>
-  <span class={`text-xs font-semibold mr-2 px-2.5 ру-0.5 rounded`}>
-   Por hacer
+  <span
+   class:list={[
+    'text-xs font-semibold mr-2 px-2.5 ру-0.5 rounded',
+    {
+     'bg-green-500 text-green-100': success,
+     'bg-red-500 text-red-100': !success
+    }
+   ]}
+  >
+   {launchStatus}
   </span>
+
   <h2 class='my-2 text-2xl font-bold tracking-tight text-white'>
    Flight #{fligthNumber}
   </h2>
+
   <p class='mb-4 font-light text-gray-400'>
-   {details != null && details?.length > 100 ? details.slice(6, 100) + '...' : details}
+   {
+    details != null && details?.length > 100
+     ? details.slice(6, 100) + '...'
+     : details
+   }
   </p>
  </header>
 </a>
